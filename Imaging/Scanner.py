@@ -1,5 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 import time
 
 class Scanner:
@@ -60,7 +60,7 @@ class Scanner:
 
         start_time = time.time()
 
-        self.master_controller.x_step(x_range,stepper_speed, xdirection)
+        self.master_controller.x_step(x_range, stepper_speed, xdirection)
         time_array = np.arange(total_delay, total_delay*(num_xsteps+1), total_delay)
         time_delay_1d = []
 
@@ -79,6 +79,6 @@ class Scanner:
         return time_delay_1d
     
 
-    
+
 
 

@@ -1,10 +1,18 @@
-from serial import Serial
-from TimeTagger import createTimeTagger, Histogram
-import numpy as np
+from serial import Serial # type: ignore
+from TimeTagger import createTimeTagger, Histogram # type: ignore
+import numpy as np # type: ignore
 
 class MotorController:
 
     def __init__(self, com_port, baud_rate=9600) -> None:
+        '''
+        Constructor for MotorController Class
+            Parameters:
+                com_port (str): Port in which the arduino is connected
+                baud_rate (int): Data rate for commmunication with arduino
+            Returns:
+                object (MotorController): MotorController object 
+        '''
         self.com_port = com_port
         self.baud_rate = baud_rate
         self.ser = Serial(com_port, baudrate=self.baud_rate)
@@ -92,6 +100,14 @@ class TTController:
 class MasterController(MotorController, TTController):
 
     def __init__(self, com_port, baud_rate=9600, spad_channel=2, trigger_channel=1, spad_ch_delay=0, trigger_ch_delay=1.072e6):
+        '''
+        Constructor for MotorController Class
+            Parameters:
+                com_port (str): Port in which the arduino is connected
+                baud_rate (int): Data rate for commmunication with arduino
+            Returns:
+                object (MotorController): MotorController object 
+        '''
         MotorController.__init__(self, com_port, baud_rate)
         TTController.__init__(self, spad_channel, trigger_channel, spad_ch_delay, trigger_ch_delay)
 
