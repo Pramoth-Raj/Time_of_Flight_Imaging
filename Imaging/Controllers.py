@@ -4,7 +4,7 @@ import numpy as np # type: ignore
 
 class MotorController:
 
-    def __init__(self, com_port, baud_rate=9600) -> None:
+    def __init__(self, com_port: str, baud_rate=9600) -> None:
         '''
         Constructor for MotorController Class
             Parameters:
@@ -79,7 +79,7 @@ class MotorController:
 
 class TTController:
 
-    def __init__(self, spad_channel=2, trigger_channel=1, spad_ch_delay=0, trigger_ch_delay=1.072e6):
+    def __init__(self, spad_channel=2, trigger_channel=1, spad_ch_delay=0.0, trigger_ch_delay=1.072e6):
         self.spad_channel = spad_channel
         self.trigger_channel = trigger_channel
         self.spad_ch_delay = spad_ch_delay
