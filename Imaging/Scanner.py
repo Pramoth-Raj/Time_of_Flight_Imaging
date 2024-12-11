@@ -1,10 +1,11 @@
 import numpy as np # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 import time
+from Controllers import MasterController
 
 class Scanner:
 
-    def __init__(self, master_controller) -> None:
+    def __init__(self, master_controller: MasterController) -> None:
         self.master_controller = master_controller
 
     def scan_2D(self, delay=0.05, rep_rate=10, acquisition_time=1, bin_width=10e-12, nbins=500, start_direction=(1,0), resolution=(0.1, 0.1), area=(15, 5)):
