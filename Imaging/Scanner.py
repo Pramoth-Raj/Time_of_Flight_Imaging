@@ -1,7 +1,7 @@
-import numpy as np # type: ignore
-import matplotlib.pyplot as plt # type: ignore
+import numpy as np 
+import matplotlib.pyplot as plt 
 import time
-from Controllers import MasterController
+from .Controllers import MasterController
 
 class Scanner:
 
@@ -15,7 +15,7 @@ class Scanner:
         x_resolution, y_resolution = resolution
         num_xsteps = int(x_range/x_resolution)
         num_ysteps = int(y_range/y_resolution)
-        stepper_speed = x_resolution/total_delay
+        stepper_speed = x_resolution/(total_delay)
 
         self.master_controller.home_set()
 
@@ -23,7 +23,8 @@ class Scanner:
 
         time_delay_2d = []
         for j in range(num_ysteps):
-            self.master_controller.x_step(x_range,stepper_speed, xdirection)
+            self.master_controller.x_step(x_range, stepper_speed, xdirection)
+            print("command given to move in x axis")
             time_array = np.arange(total_delay, total_delay*(num_xsteps+1), total_delay)
             time_delay_1d = []
             for i in range(num_xsteps):
@@ -35,15 +36,15 @@ class Scanner:
                 time_delay_1d.append(self.master_controller.acquire_histogram(acquisition_time,bin_width,nbins))
             time_delay_2d.append(time_delay_1d)
 
-            # while (abs(getlocation()[0]) < x_dist and xdirection) or (getlocation()[0]<0 and not xdirection):
-            #     print(getlocation())
-            #     continue
-            print(j)
+            while (abs(self.master_controller.getlocation()[0]) < x_range and xdirection) or (self.master_controller.getlocation()[0]<0 and not xdirection):
+                print(self.master_controller.getlocation())
+                continue
             self.master_controller.y_step(y_resolution,stepper_speed, ydirection)
 
             while (abs(self.master_controller.getlocation()[1]) < round(y_resolution*(j+1) , 3)):
                 continue
             xdirection = not(xdirection)
+            print("one iteration of for loop completed")
             
         self.master_controller.home_step()
 
@@ -68,10 +69,14 @@ class Scanner:
         for i in range(num_xsteps):
                 # if i%100==0:
                 #     print(i)
-                while time.time()<=start_time + time_array[i]:
-                    continue
+            while time.time()<=start_time + time_array[i]:
+                continue
                 
-                time_delay_1d.append(self.master_controller.acquire_histogram(acquisition_time,bin_width,nbins))
+            time_delay_1d.append(self.master_controller.acquire_histogram(acquisition_time,bin_width,nbins))
+
+            while (abs(self.master_controller.getlocation()[0]) < x_range and xdirection) or (self.master_controller.getlocation()[0]<0 and not xdirection):
+                print(self.master_controller.getlocation())
+                continue
 
             # while (abs(getlocation()[0]) < x_dist and xdirection) or (getlocation()[0]<0 and not xdirection):
             #     print(getlocation())
@@ -80,6 +85,8 @@ class Scanner:
         return time_delay_1d
     
 
-
-
+if __name__=='__main__':
+    mc = MasterController("COM13")
+    scanner = Scanner(mc)
+    scanner.master_controller.x_step(1, 1, 1)
 

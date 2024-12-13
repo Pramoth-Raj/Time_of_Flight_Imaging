@@ -46,6 +46,8 @@ class MotorController:
     def x_step(self,dist, speed, xdirection):
         dist*=6400
         speed*=6400
+        dist = int(dist)
+        speed = int(speed)
         if xdirection == 0:
             self.left_step(dist,speed)
         elif xdirection == 1:
@@ -56,6 +58,8 @@ class MotorController:
     def y_step(self,dist, speed, ydirection):
         dist*=6400
         speed*=6400
+        dist = int(dist)
+        speed = int(speed)
         if ydirection == 0:
             self.up_step(dist,speed)
         elif ydirection == 1:
@@ -79,7 +83,7 @@ class MotorController:
 
 class TTController:
 
-    def __init__(self, spad_channel=2, trigger_channel=1, spad_ch_delay=0.0, trigger_ch_delay=1.072e6):
+    def __init__(self, spad_channel=2, trigger_channel=1, spad_ch_delay=0.0, trigger_ch_delay=1.0705e6):
         self.spad_channel = spad_channel
         self.trigger_channel = trigger_channel
         self.spad_ch_delay = spad_ch_delay
@@ -99,7 +103,7 @@ class TTController:
 
 class MasterController(MotorController, TTController):
 
-    def __init__(self, com_port, baud_rate=9600, spad_channel=2, trigger_channel=1, spad_ch_delay=0, trigger_ch_delay=1.072e6):
+    def __init__(self, com_port, baud_rate=9600, spad_channel=2, trigger_channel=1, spad_ch_delay=0, trigger_ch_delay=1.0705e6):
         '''
         Constructor for MotorController Class
             Parameters:
