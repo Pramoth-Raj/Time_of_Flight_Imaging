@@ -75,7 +75,7 @@ class MotorController:
 
     def getlocation(self):
         self.send_command('E')
-        print(self.ser.readline())
+        # print(self.ser.readline())
         t =  int(self.ser.readline().split()[-1]), int(self.ser.readline().split()[-1])
         #print(t)
         return t[0]/6400,t[1]/6400
